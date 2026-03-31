@@ -256,9 +256,18 @@ export function registerAgenteventsHandlers(
 
     // Skip sending execution-progress to renderer when XState has settled.
     // XState's emitPhaseFromState already sent the correct phase to the renderer.
+    // Exception: allow final phase updates (complete/failed) through when the task is still
+    // in_progress — these are legitimate terminal phase signals, not stale agent noise.
     if (xstateInTerminalState) {
-      console.debug(`[agent-events-handlers] Skipping execution-progress to renderer for ${taskId}: XState in '${currentXState}', ignoring phase '${progress.phase}'`);
-      return;
+      const isFinalPhaseUpdate = progress.phase === 'complete' || progress.phase === 'failed';
+      if (!isFinalPhaseUpdate) {
+        console.debug(`[agent-events-handlers] Skipping execution-progress to renderer for ${taskId}: XState in '${currentXState}', ignoring phase '${progress.phase}'`);
+        return;
+      }
+      const { task: taskForCheck } = findTaskAndProject(taskId, taskProjectId);
+      if (taskForCheck && taskForCheck.status !== 'in_progress') {
+        return;
+      }
     }
     safeSendToRenderer(
       getMainWindow,
