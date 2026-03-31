@@ -236,6 +236,8 @@ export function registerInsightsHandlers(getMainWindow: () => BrowserWindow | nu
           updatedAt: new Date(),
         };
 
+        // Invalidate cache so the new task appears immediately in the Kanban
+        projectStore.invalidateTasksCache(projectId);
         return { success: true, data: task };
       } catch (error) {
         return {
