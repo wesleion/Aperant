@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Github, RefreshCw, KeyRound, Info, CheckCircle2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { CollapsibleSection } from './CollapsibleSection';
 import { StatusBadge } from './StatusBadge';
 import { PasswordInput } from './PasswordInput';
@@ -35,6 +36,8 @@ export function GitHubIntegrationSection({
   const [showOAuthFlow, setShowOAuthFlow] = useState(
     envConfig.githubAuthMethod === 'oauth' || (!envConfig.githubToken && !envConfig.githubAuthMethod)
   );
+
+  const { t } = useTranslation('settings');
 
   const badge = envConfig.githubEnabled ? (
     <StatusBadge status="success" label="Enabled" />
@@ -75,9 +78,9 @@ export function GitHubIntegrationSection({
 
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
-          <Label className="font-normal text-foreground">Enable GitHub Issues</Label>
+          <Label className="font-normal text-foreground">{t('projectSections.github.enableIssues')}</Label>
           <p className="text-xs text-muted-foreground">
-            Sync issues from GitHub and create tasks automatically
+            {t('projectSections.github.enableIssuesDescription')}
           </p>
         </div>
         <Switch
@@ -127,7 +130,7 @@ export function GitHubIntegrationSection({
           ) : (
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label className="text-sm font-medium text-foreground">Personal Access Token</Label>
+                <Label className="text-sm font-medium text-foreground">{t('projectSections.github.personalAccessToken')}</Label>
                 <Button
                   variant="outline"
                   size="sm"
@@ -158,9 +161,9 @@ export function GitHubIntegrationSection({
           )}
 
           <div className="space-y-2">
-            <Label className="text-sm font-medium text-foreground">Repository</Label>
+            <Label className="text-sm font-medium text-foreground">{t('projectSections.github.repository')}</Label>
             <p className="text-xs text-muted-foreground">
-              Format: <code className="px-1 bg-muted rounded">owner/repo</code> (e.g., facebook/react)
+              {t('projectSections.github.repositoryFormat')}
             </p>
             <Input
               placeholder="owner/repository"
@@ -187,9 +190,9 @@ export function GitHubIntegrationSection({
               <div className="flex items-start gap-3">
                 <Github className="h-5 w-5 text-info mt-0.5" />
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-foreground">Issues Available</p>
+                  <p className="text-sm font-medium text-foreground">{t('projectSections.github.issuesAvailable')}</p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    Access GitHub Issues from the sidebar to view, investigate, and create tasks from issues.
+                    {t('projectSections.github.issuesAvailableDescription')}
                   </p>
                 </div>
               </div>
@@ -203,10 +206,10 @@ export function GitHubIntegrationSection({
             <div className="space-y-0.5">
               <div className="flex items-center gap-2">
                 <RefreshCw className="h-4 w-4 text-info" />
-                <Label className="font-normal text-foreground">Auto-Sync on Load</Label>
+                <Label className="font-normal text-foreground">{t('projectSections.github.autoSync')}</Label>
               </div>
               <p className="text-xs text-muted-foreground pl-6">
-                Automatically fetch issues when the project loads
+                {t('projectSections.github.autoSyncDescription')}
               </p>
             </div>
             <Switch

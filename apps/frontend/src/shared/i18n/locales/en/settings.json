@@ -236,7 +236,16 @@
     "autoClaudePathDescription": "Relative path to auto-claude directory in projects",
     "autoClaudePathPlaceholder": "auto-claude (default)",
     "autoNameTerminals": "Automatically name terminals",
-    "autoNameTerminalsDescription": "Use AI to generate descriptive names for terminal tabs based on their activity"
+    "autoNameTerminalsDescription": "Use AI to generate descriptive names for terminal tabs based on their activity",
+    "autoBuildIntegration": "Auto-Build Integration",
+    "notInitialized": "Not Initialized",
+    "notInitializedDescription": "Initialize Auto-Build to enable task creation and agent workflows.",
+    "initializing": "Initializing...",
+    "initializeButton": "Initialize Auto-Build",
+    "initialized": "Initialized",
+    "checkingStatus": "Checking status...",
+    "agentConfiguration": "Agent Configuration",
+    "modelLabel": "Model"
   },
   "theme": {
     "title": "Appearance",
@@ -247,7 +256,10 @@
     "dark": "Dark",
     "system": "System",
     "colorTheme": "Color Theme",
-    "colorThemeDescription": "Choose your preferred color palette"
+    "colorThemeDescription": "Choose your preferred color palette",
+    "appearanceMode": "Appearance Mode",
+    "appearanceModeDescription": "Choose light, dark, or system preference",
+    "colorThemeSelect": "Select a color palette for the interface"
   },
   "devtools": {
     "title": "Developer Tools",
@@ -336,7 +348,12 @@
       "title": "General",
       "description": "Auto-Build and agent config",
       "useClaudeMd": "Use CLAUDE.md",
-      "useClaudeMdDescription": "Include CLAUDE.md instructions in agent context"
+      "useClaudeMdDescription": "Include CLAUDE.md instructions in agent context",
+      "notifications": "Notifications",
+      "onTaskComplete": "On Task Complete",
+      "onTaskFailed": "On Task Failed",
+      "onReviewNeeded": "On Review Needed",
+      "sound": "Sound"
     },
     "claude": {
       "title": "Claude Auth",
@@ -347,7 +364,9 @@
       "description": "Linear integration",
       "integrationTitle": "Linear Integration",
       "integrationDescription": "Connect to Linear for issue tracking and task import",
-      "syncDescription": "Sync with Linear for issue tracking"
+      "syncDescription": "Sync with Linear for issue tracking",
+      "enableSync": "Enable Linear Sync",
+      "enableSyncDescription": "Create and update Linear issues automatically"
     },
     "github": {
       "title": "GitHub",
@@ -362,7 +381,17 @@
         "searchPlaceholder": "Search branches...",
         "noBranchesFound": "No branches found",
         "selectedBranchHelp": "All new tasks will branch from {{branch}}"
-      }
+      },
+      "enableIssues": "Enable GitHub Issues",
+      "enableIssuesDescription": "Sync issues from GitHub and create tasks automatically",
+      "personalAccessToken": "Personal Access Token",
+      "connectionStatus": "Connection Status",
+      "issuesAvailable": "Issues Available",
+      "issuesAvailableDescription": "Access GitHub Issues from the sidebar to view, investigate, and create tasks from issues.",
+      "autoSync": "Auto-Sync on Load",
+      "autoSyncDescription": "Automatically fetch issues when the project loads",
+      "repository": "Repository",
+      "repositoryFormat": "Format: owner/repo (e.g., facebook/react)"
     },
     "gitlab": {
       "title": "GitLab",
@@ -376,7 +405,23 @@
       "description": "Graphiti memory backend",
       "integrationTitle": "Memory",
       "integrationDescription": "Configure persistent cross-session memory for agents",
-      "syncDescription": "Configure persistent memory"
+      "syncDescription": "Configure persistent memory",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "enableMemory": "Enable Memory",
+      "enableMemoryDescription": "Persistent cross-session memory using embedded graph database",
+      "fileMemoryNote": "Using file-based memory. Session insights are stored locally in JSON files. Enable Memory for persistent cross-session context with semantic search.",
+      "enableAgentAccess": "Enable Agent Memory Access",
+      "enableAgentAccessDescription": "Allow agents to search and add to the knowledge graph via MCP",
+      "mcpUrl": "Graphiti MCP Server URL",
+      "mcpUrlDescription": "URL of the Graphiti MCP server",
+      "embeddingProvider": "Embedding Provider",
+      "embeddingProviderDescription": "Provider for semantic search (optional - keyword search works without)",
+      "selectEmbeddingModel": "Select embedding model",
+      "databaseName": "Database Name",
+      "databaseNameDescription": "Name for the memory database (stored in ~/.auto-claude/memories/)",
+      "databasePath": "Database Path (Optional)",
+      "databasePathDescription": "Custom storage location. Default: ~/.auto-claude/memories/"
     }
   },
   "agentProfile": {
@@ -507,6 +552,25 @@
       "profileCreatedAuthFailed": "Profile created but failed to prepare authentication: {{error}}",
       "authPrepareFailed": "Failed to prepare authentication: {{error}}",
       "authStartFailedMessage": "Failed to start authentication. Please try again."
+    },
+    "github": {
+      "enableIssues": "Enable GitHub Issues",
+      "enableIssuesDescription": "Sync issues from GitHub and create tasks automatically",
+      "connectionStatus": "Connection Status",
+      "checking": "Checking...",
+      "notConnected": "Not connected",
+      "issuesAvailable": "Issues Available",
+      "issuesAvailableDescription": "Access GitHub Issues from the sidebar to view, investigate, and create tasks from issues.",
+      "autoSync": "Auto-Sync on Load",
+      "autoSyncDescription": "Automatically fetch issues when the project loads",
+      "defaultBranch": {
+        "label": "Default Branch",
+        "description": "Branch used to create worktrees and task merges",
+        "autoDetect": "Auto-detect...",
+        "searchPlaceholder": "Search branches...",
+        "noBranchesFound": "No branches found",
+        "selectedBranchHelp": "Worktrees and merges will be created from {{branch}}"
+      }
     }
   },
   "accounts": {

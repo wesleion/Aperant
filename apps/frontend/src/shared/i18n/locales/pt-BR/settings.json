@@ -236,7 +236,16 @@
     "autoClaudePathDescription": "Caminho relativo para o diretório auto-claude nos projetos",
     "autoClaudePathPlaceholder": "auto-claude (padrão)",
     "autoNameTerminals": "Nomear terminais automaticamente",
-    "autoNameTerminalsDescription": "Usar IA para gerar nomes descritivos para abas de terminal com base em sua atividade"
+    "autoNameTerminalsDescription": "Usar IA para gerar nomes descritivos para abas de terminal com base em sua atividade",
+    "autoBuildIntegration": "Integração Auto-Build",
+    "notInitialized": "Não Inicializado",
+    "notInitializedDescription": "Inicialize o Auto-Build para habilitar criação de tarefas e workflows de agent.",
+    "initializing": "Inicializando...",
+    "initializeButton": "Inicializar Auto-Build",
+    "initialized": "Inicializado",
+    "checkingStatus": "Verificando status...",
+    "agentConfiguration": "Configuração do Agent",
+    "modelLabel": "Modelo"
   },
   "theme": {
     "title": "Aparência",
@@ -247,7 +256,10 @@
     "dark": "Escuro",
     "system": "Sistema",
     "colorTheme": "Tema de Cores",
-    "colorThemeDescription": "Escolha sua paleta de cores preferida"
+    "colorThemeDescription": "Escolha sua paleta de cores preferida",
+    "appearanceMode": "Modo de Aparência",
+    "appearanceModeDescription": "Escolha claro, escuro ou preferência do sistema",
+    "colorThemeSelect": "Selecione uma paleta de cores para a interface"
   },
   "devtools": {
     "title": "Ferramentas de Desenvolvedor",
@@ -336,7 +348,12 @@
       "title": "Geral",
       "description": "Configuração do Auto-Build e agent",
       "useClaudeMd": "Usar CLAUDE.md",
-      "useClaudeMdDescription": "Incluir instruções do CLAUDE.md no contexto do agent"
+      "useClaudeMdDescription": "Incluir instruções do CLAUDE.md no contexto do agent",
+      "notifications": "Notificações",
+      "onTaskComplete": "Ao Concluir Task",
+      "onTaskFailed": "Ao Falhar Task",
+      "onReviewNeeded": "Ao Precisar de Revisão",
+      "sound": "Som"
     },
     "claude": {
       "title": "Auth Claude",
@@ -347,7 +364,9 @@
       "description": "Integração Linear",
       "integrationTitle": "Integração Linear",
       "integrationDescription": "Conectar ao Linear para rastreamento de issues e importação de tasks",
-      "syncDescription": "Sincronizar com Linear para rastreamento de issues"
+      "syncDescription": "Sincronizar com Linear para rastreamento de issues",
+      "enableSync": "Ativar Sincronização Linear",
+      "enableSyncDescription": "Criar e atualizar issues do Linear automaticamente"
     },
     "github": {
       "title": "GitHub",
@@ -362,7 +381,17 @@
         "searchPlaceholder": "Buscar branches...",
         "noBranchesFound": "Nenhum branch encontrado",
         "selectedBranchHelp": "Todas as novas tasks terão como base {{branch}}"
-      }
+      },
+      "enableIssues": "Ativar GitHub Issues",
+      "enableIssuesDescription": "Sincronizar issues do GitHub e criar tasks automaticamente",
+      "personalAccessToken": "Token de Acesso Pessoal",
+      "connectionStatus": "Status da Conexão",
+      "issuesAvailable": "Issues Disponíveis",
+      "issuesAvailableDescription": "Acesse os issues do GitHub pela barra lateral para visualizar, investigar e criar tasks.",
+      "autoSync": "Sincronização Automática ao Carregar",
+      "autoSyncDescription": "Buscar issues automaticamente quando o projeto é carregado",
+      "repository": "Repositório",
+      "repositoryFormat": "Formato: owner/repo (ex: facebook/react)"
     },
     "gitlab": {
       "title": "GitLab",
@@ -376,7 +405,23 @@
       "description": "Backend de memória Graphiti",
       "integrationTitle": "Memória",
       "integrationDescription": "Configure memória persistente entre sessões para agents",
-      "syncDescription": "Configurar memória persistente"
+      "syncDescription": "Configurar memória persistente",
+      "enabled": "Ativado",
+      "disabled": "Desativado",
+      "enableMemory": "Ativar Memória",
+      "enableMemoryDescription": "Memória persistente entre sessões usando banco de dados de grafo integrado",
+      "fileMemoryNote": "Usando memória baseada em arquivo. Insights de sessão são armazenados localmente em arquivos JSON. Ative a Memória para contexto persistente entre sessões com busca semântica.",
+      "enableAgentAccess": "Ativar Acesso de Memória para Agents",
+      "enableAgentAccessDescription": "Permite que agents busquem e adicionem ao grafo de conhecimento via MCP",
+      "mcpUrl": "URL do Servidor MCP Graphiti",
+      "mcpUrlDescription": "URL do servidor MCP Graphiti",
+      "embeddingProvider": "Provedor de Embeddings",
+      "embeddingProviderDescription": "Provedor para busca semântica (opcional - busca por palavras-chave funciona sem)",
+      "selectEmbeddingModel": "Selecionar modelo de embedding",
+      "databaseName": "Nome do Banco de Dados",
+      "databaseNameDescription": "Nome para o banco de dados de memória (armazenado em ~/.auto-claude/memories/)",
+      "databasePath": "Caminho do Banco de Dados (Opcional)",
+      "databasePathDescription": "Local de armazenamento personalizado. Padrão: ~/.auto-claude/memories/"
     }
   },
   "agentProfile": {
@@ -507,6 +552,25 @@
       "profileCreatedAuthFailed": "Perfil criado, mas falha ao preparar autenticação: {{error}}",
       "authPrepareFailed": "Falha ao preparar autenticação: {{error}}",
       "authStartFailedMessage": "Falha ao iniciar autenticação. Por favor, tente novamente."
+    },
+    "github": {
+      "enableIssues": "Ativar GitHub Issues",
+      "enableIssuesDescription": "Sincronizar issues do GitHub e criar tasks automaticamente",
+      "connectionStatus": "Status da Conexão",
+      "checking": "Verificando...",
+      "notConnected": "Não conectado",
+      "issuesAvailable": "Issues Disponíveis",
+      "issuesAvailableDescription": "Acesse os issues do GitHub pela barra lateral para visualizar, investigar e criar tasks.",
+      "autoSync": "Sincronização Automática ao Carregar",
+      "autoSyncDescription": "Buscar issues automaticamente quando o projeto é carregado",
+      "defaultBranch": {
+        "label": "Branch Padrão",
+        "description": "Branch usada para criar worktrees e merges de tasks",
+        "autoDetect": "Auto-detectar...",
+        "searchPlaceholder": "Buscar branches...",
+        "noBranchesFound": "Nenhum branch encontrado",
+        "selectedBranchHelp": "Worktrees e merges serão criados a partir de {{branch}}"
+      }
     }
   },
   "accounts": {
