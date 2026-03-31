@@ -1,20 +1,52 @@
-# Auto Claude
+# Auto Claude — WON Fork (Aperant)
 
 **Autonomous multi-agent coding framework that plans, builds, and validates software for you.**
+
+> Este é o fork **wesleion/Aperant** do [AndyMik90/Auto-Claude](https://github.com/AndyMik90/Auto-Claude), mantido na branch `won/stable`. Inclui correções de bugs e tradução pt-BR não presentes no upstream.
 
 ![Auto Claude Kanban Board](.github/assets/Auto-Claude-Kanban.png)
 
 [![License](https://img.shields.io/badge/license-AGPL--3.0-green?style=flat-square)](./agpl-3.0.txt)
-[![Discord](https://img.shields.io/badge/Discord-Join%20Community-5865F2?style=flat-square&logo=discord&logoColor=white)](https://discord.gg/KCXaPBr4Dj)
-[![YouTube](https://img.shields.io/badge/YouTube-Subscribe-FF0000?style=flat-square&logo=youtube&logoColor=white)](https://www.youtube.com/@AndreMikalsen)
-[![CI](https://img.shields.io/github/actions/workflow/status/AndyMik90/Auto-Claude/ci.yml?branch=main&style=flat-square&label=CI)](https://github.com/AndyMik90/Auto-Claude/actions)
-[![Mentioned in Awesome Claude Code](https://awesome.re/mentioned-badge-flat.svg)](https://github.com/hesreallyhim/awesome-claude-code)
+[![WON Build](https://img.shields.io/github/actions/workflow/status/wesleion/Aperant/won-build.yml?branch=won%2Fstable&style=flat-square&label=WON+Build)](https://github.com/wesleion/Aperant/actions/workflows/won-build.yml)
+[![Upstream CI](https://img.shields.io/github/actions/workflow/status/AndyMik90/Auto-Claude/ci.yml?branch=main&style=flat-square&label=Upstream+CI)](https://github.com/AndyMik90/Auto-Claude/actions)
 
 ---
 
-## Download
+## Download — WON Build (Windows)
 
-### Stable Release
+### Via GitHub Releases (recomendado)
+
+[![WON Releases](https://img.shields.io/github/v/release/wesleion/Aperant?filter=won%2F*&style=flat-square&label=WON+Release&color=blue)](https://github.com/wesleion/Aperant/releases)
+
+Baixe o instalador mais recente na [página de Releases](https://github.com/wesleion/Aperant/releases) — arquivo `Auto-Claude-*-win32-x64.exe`.
+
+### Via GitHub Actions (build mais recente)
+
+Para a build mais recente (antes de um release formal):
+
+1. Acesse [Actions → WON Windows Build](https://github.com/wesleion/Aperant/actions/workflows/won-build.yml)
+2. Clique no run mais recente com sucesso
+3. Baixe o artefato `won-windows-installer` (arquivo `.zip`)
+4. Extraia o `.zip` e execute o instalador `.exe` dentro
+
+### Patches WON incluídos
+
+| Patch | Descrição |
+|-------|-----------|
+| Notifications | Falha silenciosa no Windows envolta em try-catch |
+| Kanban | Corrige tarefa desaparecendo antes do merge completar |
+| Insights | Cache invalidado após criação de tarefa |
+| PR Review | Remove CR do output de subprocessos no Windows |
+| QA Deadlock | QA avança quando subtarefas estão stuck ou failed |
+| F12 DevTools | Habilita toggle de DevTools em builds de produção |
+| Sonnet 4.6 | Atualiza model ID para claude-sonnet-4-6 |
+| pt-BR | Tradução completa em Português do Brasil (11 namespaces) |
+
+---
+
+## Download — Upstream Releases
+
+Releases originais do [AndyMik90/Auto-Claude](https://github.com/AndyMik90/Auto-Claude/releases) (sem patches WON):
 
 <!-- STABLE_VERSION_BADGE -->
 [![Stable](https://img.shields.io/badge/stable-2.7.6-blue?style=flat-square)](https://github.com/AndyMik90/Auto-Claude/releases/tag/v2.7.6)
@@ -31,26 +63,7 @@
 | **Linux (Flatpak)** | [Auto-Claude-2.7.6-linux-x86_64.flatpak](https://github.com/AndyMik90/Auto-Claude/releases/download/v2.7.6/Auto-Claude-2.7.6-linux-x86_64.flatpak) |
 <!-- STABLE_DOWNLOADS_END -->
 
-### Beta Release
-
-> ⚠️ Beta releases may contain bugs and breaking changes. [View all releases](https://github.com/AndyMik90/Auto-Claude/releases)
-
-<!-- BETA_VERSION_BADGE -->
-[![Beta](https://img.shields.io/badge/beta-2.7.6--beta.6-orange?style=flat-square)](https://github.com/AndyMik90/Auto-Claude/releases/tag/v2.7.6-beta.6)
-<!-- BETA_VERSION_BADGE_END -->
-
-<!-- BETA_DOWNLOADS -->
-| Platform | Download |
-|----------|----------|
-| **Windows** | [Auto-Claude-2.7.6-beta.6-win32-x64.exe](https://github.com/AndyMik90/Auto-Claude/releases/download/v2.7.6-beta.6/Auto-Claude-2.7.6-beta.6-win32-x64.exe) |
-| **macOS (Apple Silicon)** | [Auto-Claude-2.7.6-beta.6-darwin-arm64.dmg](https://github.com/AndyMik90/Auto-Claude/releases/download/v2.7.6-beta.6/Auto-Claude-2.7.6-beta.6-darwin-arm64.dmg) |
-| **macOS (Intel)** | [Auto-Claude-2.7.6-beta.6-darwin-x64.dmg](https://github.com/AndyMik90/Auto-Claude/releases/download/v2.7.6-beta.6/Auto-Claude-2.7.6-beta.6-darwin-x64.dmg) |
-| **Linux** | [Auto-Claude-2.7.6-beta.6-linux-x86_64.AppImage](https://github.com/AndyMik90/Auto-Claude/releases/download/v2.7.6-beta.6/Auto-Claude-2.7.6-beta.6-linux-x86_64.AppImage) |
-| **Linux (Debian)** | [Auto-Claude-2.7.6-beta.6-linux-amd64.deb](https://github.com/AndyMik90/Auto-Claude/releases/download/v2.7.6-beta.6/Auto-Claude-2.7.6-beta.6-linux-amd64.deb) |
-| **Linux (Flatpak)** | [Auto-Claude-2.7.6-beta.6-linux-x86_64.flatpak](https://github.com/AndyMik90/Auto-Claude/releases/download/v2.7.6-beta.6/Auto-Claude-2.7.6-beta.6-linux-x86_64.flatpak) |
-<!-- BETA_DOWNLOADS_END -->
-
-> All releases include SHA256 checksums and VirusTotal scan results for security verification.
+> Todos os releases upstream incluem checksums SHA256 e resultados de scan do VirusTotal.
 
 ---
 

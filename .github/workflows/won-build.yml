@@ -2,7 +2,9 @@
 #
 # Builds the Windows installer (.exe) for the won/stable branch fork.
 # No code signing required — unsigned build for personal use.
-# Artifacts are uploaded and retained for 14 days.
+#
+# On push to won/stable: uploads artifact (14-day retention).
+# On push of a won/v* tag:  uploads artifact + creates a GitHub Release.
 
 name: WON Windows Build
 
@@ -14,7 +16,7 @@ on:
       - 'won/v*'
 
 permissions:
-  contents: read
+  contents: write   # needed to create GitHub Releases
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -88,3 +90,33 @@ jobs:
             apps/frontend/dist/*.blockmap
           retention-days: 14
           if-no-files-found: error
+
+      - name: Create GitHub Release (tag builds only)
+        if: startsWith(github.ref, 'refs/tags/won/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "WON Build ${{ github.ref_name }}"
+          tag_name: ${{ github.ref_name }}
+          body: |
+            ## WON Build — Aperant Fork
+
+            Windows installer built from branch `won/stable` with all WON patches applied.
+
+            ### Patches included
+            - Notifications: silent failure wrapped in try-catch
+            - Kanban: task no longer disappears before merge
+            - Insights: cache invalidated after task creation
+            - PR Review: strips trailing CR from subprocess output on Windows
+            - QA Deadlock: QA proceeds when subtasks are stuck or failed
+            - F12 DevTools: enabled in production builds
+            - Sonnet 4.6: updated model ID to `claude-sonnet-4-6`
+            - pt-BR: complete Brazilian Portuguese translation
+
+            ### Install
+            Download the `.exe` file below, run it, and follow the installer.
+            > ⚠️ Windows may show a SmartScreen warning — this is expected for unsigned builds. Click "More info → Run anyway".
+          files: |
+            apps/frontend/dist/*.exe
+            apps/frontend/dist/*.blockmap
+          draft: false
+          prerelease: false
