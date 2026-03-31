@@ -354,7 +354,9 @@ export function runPythonSubprocess<T = unknown>(
       const text = data.toString('utf-8');
       stdout += text;
 
-      const lines = text.split('\n');
+      // Strip trailing \r from each line to handle Windows CRLF output
+      // Without this, regex anchors ($) in parseLogLine() fail on Windows
+      const lines = text.split('\n').map((l) => l.charCodeAt(l.length - 1) === 13 ? l.slice(0, -1) : l);
       for (const line of lines) {
         if (line.trim()) {
           // Call custom stdout handler
@@ -382,7 +384,8 @@ export function runPythonSubprocess<T = unknown>(
       const text = data.toString('utf-8');
       stderr += text;
 
-      const lines = text.split('\n');
+      // Strip trailing \r from each line to handle Windows CRLF output
+      const lines = text.split('\n').map((l) => l.charCodeAt(l.length - 1) === 13 ? l.slice(0, -1) : l);
       for (const line of lines) {
         if (line.trim()) {
           options.onStderr?.(line);
