@@ -91,7 +91,11 @@ class NotificationService {
         }
       });
 
-      notification.show();
+      try {
+        notification.show();
+      } catch (notifErr) {
+        console.error('[NotificationService] Failed to show notification:', notifErr);
+      }
     }
 
     // Play sound if enabled (system beep)
