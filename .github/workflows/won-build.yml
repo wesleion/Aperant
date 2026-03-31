@@ -1,0 +1,87 @@
+# WON Windows Build
+#
+# Builds the Windows installer (.exe) for the won/stable branch fork.
+# No code signing required — unsigned build for personal use.
+# Artifacts are uploaded and retained for 14 days.
+
+name: WON Windows Build
+
+on:
+  push:
+    branches:
+      - won/stable
+    tags:
+      - 'won/v*'
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows:
+    name: Build Windows Installer
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: ${{ runner.os }}-npm-
+
+      - name: Install dependencies
+        shell: bash
+        run: npm ci
+
+      - name: Link node_modules for electron-builder
+        shell: bash
+        # electron-builder expects node_modules in apps/frontend.
+        # With npm workspaces, packages are hoisted to root. Create a junction
+        # so electron-builder can find modules during packaging.
+        run: |
+          if [ -e "apps/frontend/node_modules" ] || [ -L "apps/frontend/node_modules" ]; then
+            rm -rf "apps/frontend/node_modules"
+          fi
+          abs_target=$(cygpath -w "$(pwd)/node_modules")
+          link_path=$(cygpath -w "$(pwd)/apps/frontend/node_modules")
+          powershell -Command "New-Item -ItemType Junction -Path '$link_path' -Target '$abs_target'" > /dev/null
+          echo "Created junction: apps/frontend/node_modules -> $abs_target"
+
+      - name: Build application (electron-vite)
+        working-directory: apps/frontend
+        shell: bash
+        run: npm run build
+
+      - name: Package Windows installer (unsigned)
+        working-directory: apps/frontend
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Disable all code signing — unsigned build for personal use
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+          WIN_CSC_LINK: ''
+        run: npm run package:win
+
+      - name: Upload Windows installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: won-windows-installer
+          path: |
+            apps/frontend/dist/*.exe
+            apps/frontend/dist/*.yml
+            apps/frontend/dist/*.blockmap
+          retention-days: 14
+          if-no-files-found: error
