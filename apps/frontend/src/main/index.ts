@@ -388,6 +388,16 @@ app.whenReady().then(() => {
   // and ignore CommandOrControl + R in production.
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window);
+    // Enable F12 DevTools toggle in all environments (not just dev)
+    window.webContents.on('before-input-event', (_event, input) => {
+      if (input.type === 'keyDown' && input.code === 'F12') {
+        if (window.webContents.isDevToolsOpened()) {
+          window.webContents.closeDevTools();
+        } else {
+          window.webContents.openDevTools({ mode: 'undocked' });
+        }
+      }
+    });
   });
 
   // Initialize agent manager
