@@ -409,13 +409,24 @@ export async function testConnection(
   const combinedSignal = combinedController.signal;
 
   try {
+    // Build models endpoint — avoid doubling /v1 when base URL already ends with it
+    // e.g. https://api.groq.com/openai/v1 → /models (not /v1/models)
+    const modelsPath = normalizedUrl.endsWith('/v1') ? '/models' : '/v1/models';
+
+    // Use Anthropic headers for Anthropic-compatible providers, Bearer token for OpenAI-compatible
+    const isAnthropicCompatible =
+      normalizedUrl.includes('anthropic.com') ||
+      normalizedUrl.includes('z.ai') ||
+      normalizedUrl.includes('bigmodel.cn');
+
+    const authHeaders: Record<string, string> = isAnthropicCompatible
+      ? { 'x-api-key': apiKey, 'anthropic-version': '2023-06-01' }
+      : { 'Authorization': `Bearer ${apiKey}` };
+
     // Make minimal API request
-    const response = await fetch(`${normalizedUrl}/v1/models`, {
+    const response = await fetch(`${normalizedUrl}${modelsPath}`, {
       method: 'GET',
-      headers: {
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01'
-      },
+      headers: authHeaders,
       signal: combinedSignal
     });
 
